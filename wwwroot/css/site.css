@@ -8,13 +8,14 @@
 
 table {
     font-family: Arial, sans-serif;
-    border: 1px solid;
+    border: 200px solid;
     border-collapse: collapse;
+    text-align: center;
 }
 
 th {
     background-color: #f8f8f8;
-    padding: 5px;
+    padding: 20px;
 }
 
 td {

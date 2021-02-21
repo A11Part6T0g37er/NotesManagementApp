@@ -112,6 +112,9 @@ function _displayItems(data) {
 
         let td2 = tr.insertCell(1);
         let textNode = document.createTextNode(item.name);
+
+        //if (isCompleteCheckbox) { textNode.style.setProperty("text-decoration", "line-through") }
+
         td2.appendChild(textNode);
 
         let td3 = tr.insertCell(2);

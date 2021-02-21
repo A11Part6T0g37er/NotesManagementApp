@@ -11,6 +11,7 @@ namespace NotesManagementApp.Models
         public NotesContext( DbContextOptions<NotesContext> options) : base(options)
         {
         }
+        public NotesContext() { }
         public DbSet<ManagedNotes> Notes { get; set; }
     }
 }

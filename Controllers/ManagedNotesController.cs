@@ -13,18 +13,18 @@ namespace NotesManagementApp.Controllers
     [ApiController]
     public class ManagedNotesController : ControllerBase
     {
-        private readonly NotesContext _context;
+        private readonly IRepository<ManagedNotes> _context;
 
         public ManagedNotesController(NotesContext context)
         {
-            _context = context;
+            _context = new NotesRepository(context);
         }
 
         // GET: api/ManagedNotes
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ManagedNotesDTO>>> GetNotes()
         {
-            return await _context.Notes.Select(x => NotesToDTO(x)).ToListAsync();
+            return await _context.GetNotesList().Select(x => NotesToDTO(x)).ToListAsync();
         }
 
         // GET: api/ManagedNotes/5
