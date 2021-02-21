@@ -151,3 +151,5 @@ C:\Users\bghva\source\repos\NotesManagementApp\obj\Debug\net5.0\NotesManagementA
 C:\Users\bghva\source\repos\NotesManagementApp\obj\Debug\net5.0\ref\NotesManagementApp.dll
 C:\Users\bghva\source\repos\NotesManagementApp\obj\Debug\net5.0\NotesManagementApp.pdb
 C:\Users\bghva\source\repos\NotesManagementApp\obj\Debug\net5.0\NotesManagementApp.genruntimeconfig.cache
+C:\Users\bghva\source\repos\NotesManagementApp\obj\Debug\net5.0\NotesManagementApp.csprojAssemblyReference.cache
+C:\Users\bghva\source\repos\NotesManagementApp\bin\Debug\net5.0\package-lock.json

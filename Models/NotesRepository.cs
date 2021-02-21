@@ -6,74 +6,52 @@ using System.Threading.Tasks;
 
 namespace NotesManagementApp.Models
 {
-    public class NotesRepository : IRepository<ManagedNotes>
+   
+    public class NotesRepository : RepositoryBase<ManagedNotes>, INotesRepository
     {
-        private bool disposedValue;
-
-        private NotesContext notesDb;
-        
-      public  NotesRepository(NotesContext notesContext)
+        protected new RepositoryContext RepositoryContext { get; set; }
+        public NotesRepository(RepositoryContext repositoryContext): base (repositoryContext)
+         {
+             RepositoryContext = repositoryContext;
+        }
+        public async Task<IEnumerable<ManagedNotes>> GetAllNotesAsync()
         {
-            this.notesDb = notesContext;
+            return await FindAll()
+               .OrderBy(ow => ow.Name)
+               .ToListAsync();
         }
 
-        public void Create(ManagedNotes item)
+        public async Task<ManagedNotes> GetNoteByIdAsync(long noteId)
         {
-            throw new NotImplementedException();
+            return await FindByCondition(owner => owner.Id.Equals(noteId))
+                .FirstOrDefaultAsync();
         }
 
-        public void Delete(long id)
+       
+
+        public void CreateNote(ManagedNotes note)
         {
-            throw new NotImplementedException();
+           RepositoryContext.Notes.Add(note);
+            SaveChangesAsync();
         }
 
-        public ManagedNotes GetNote(long id)
+        public void UpdateNote(ManagedNotes note)
         {
-            throw new NotImplementedException();
+            RepositoryContext.Entry(note).State = EntityState.Modified;
+            SaveChangesAsync();
         }
 
-        public IEnumerable<ManagedNotes> GetNotesList()
+        public void DeleteNote(ManagedNotes note)
         {
-            return notesDb.Notes;
+            RepositoryContext.Notes.Remove(note);
+            SaveChangesAsync();
         }
 
-        public void Save()
+
+        public async Task SaveChangesAsync()
         {
-            throw new NotImplementedException();
+            await RepositoryContext.SaveChangesAsync();
         }
 
-        public void Update(long id)
-        {
-            throw new NotImplementedException();
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    // TODO: dispose managed state (managed objects)
-                }
-
-                // TODO: free unmanaged resources (unmanaged objects) and override finalizer
-                // TODO: set large fields to null
-                disposedValue = true;
-            }
-        }
-
-        // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
-        // ~NotesRepository()
-        // {
-        //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-        //     Dispose(disposing: false);
-        // }
-
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
     }
 }

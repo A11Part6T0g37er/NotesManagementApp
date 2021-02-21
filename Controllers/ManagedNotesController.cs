@@ -13,18 +13,18 @@ namespace NotesManagementApp.Controllers
     [ApiController]
     public class ManagedNotesController : ControllerBase
     {
-        private readonly IRepository<ManagedNotes> _context;
+        private readonly NotesContext _context;
 
         public ManagedNotesController(NotesContext context)
         {
-            _context = new NotesRepository(context);
+            _context = context;
         }
 
         // GET: api/ManagedNotes
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ManagedNotesDTO>>> GetNotes()
         {
-            return await _context.GetNotesList().Select(x => NotesToDTO(x)).ToListAsync();
+            return await _context.Notes.Select(x => NotesToDTO(x)).ToListAsync();
         }
 
         // GET: api/ManagedNotes/5
@@ -61,7 +61,7 @@ namespace NotesManagementApp.Controllers
 
             managedNotes.IsComplete = managedNotesDTO.IsComplete;
             managedNotes.Name = managedNotesDTO.Name;
-           
+
             _context.Entry(managedNotes).State = EntityState.Modified;
 
             try
@@ -117,7 +117,7 @@ namespace NotesManagementApp.Controllers
         }
 
         private bool ManagedNotesExists(long id) => _context.Notes.Any(e => e.Id == id);
-        
+
         private static ManagedNotesDTO NotesToDTO(ManagedNotes todoItem) =>
             new ManagedNotesDTO
             {
